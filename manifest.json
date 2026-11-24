@@ -1,0 +1,11 @@
+{
+  "name": "Birthday Memories",
+  "short_name": "Birthday",
+  "description": "A special birthday experience",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#07070D",
+  "theme_color": "#07070D"
+}
