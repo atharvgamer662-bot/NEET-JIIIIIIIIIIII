@@ -18,7 +18,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationManager manager =
-            (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            (NotificationManager) context.getSystemService(
+                Context.NOTIFICATION_SERVICE
+            );
 
         if (manager == null) return;
 
@@ -35,14 +37,16 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent openApp = new Intent(context, MainActivity.class);
         openApp.setFlags(
             Intent.FLAG_ACTIVITY_NEW_TASK |
-            Intent.FLAG_ACTIVITY_CLEAR_TOP
+            Intent.FLAG_ACTIVITY_CLEAR_TOP |
+            Intent.FLAG_ACTIVITY_SINGLE_TOP
         );
 
-        PendingIntent contentIntent = PendingIntent.getActivity(
+        PendingIntent fullScreenIntent = PendingIntent.getActivity(
             context,
             1002,
             openApp,
-            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT |
+            PendingIntent.FLAG_IMMUTABLE
         );
 
         Notification.Builder builder =
@@ -53,7 +57,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setSmallIcon(R.drawable.birthday_notification_icon)
             .setContentTitle("Happy Birthday! 🎂")
             .setContentText("Today is your special day! ❤️")
-            .setContentIntent(contentIntent)
+            .setContentIntent(fullScreenIntent)
+            .setFullScreenIntent(fullScreenIntent, true)
+            .setCategory(Notification.CATEGORY_ALARM)
             .setAutoCancel(true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -68,7 +74,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            builder.setPriority(Notification.PRIORITY_HIGH);
+            builder.setPriority(Notification.PRIORITY_MAX);
             builder.setDefaults(Notification.DEFAULT_ALL);
         }
 
@@ -76,7 +82,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             context.checkSelfPermission(
                 android.Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED) {
-
             manager.notify(1001, builder.build());
         }
     }
