@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.JavascriptInterface;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -50,7 +51,10 @@ public class MainActivity extends Activity {
             android.app.AlarmManager alarmManager =
                 (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
 
-            if (!alarmManager.canScheduleExactAlarms()) return;
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Toast.makeText(this, "Exact alarm permission missing!", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
         android.app.AlarmManager alarmManager =
@@ -70,6 +74,7 @@ public class MainActivity extends Activity {
             System.currentTimeMillis() + 60_000,
             testPendingIntent
         );
+        Toast.makeText(this, "Test alarm scheduled! Wait 1 minute.", Toast.LENGTH_LONG).show();
     }
 
     private class AlarmBridge {
