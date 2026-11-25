@@ -1,6 +1,7 @@
 package com.neetjiiii.birthday;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.os.Bundle;
 import android.os.Build;
 import android.Manifest;
@@ -38,6 +39,37 @@ public class MainActivity extends Activity {
         webView.loadUrl("file:///android_asset/birthday.html");
 
         requestNotificationPermission();
+
+        if ("com.neetjiiii.birthday.TEST_NOTIFICATION".equals(getIntent().getAction())) {
+            scheduleTestNotification();
+        }
+    }
+
+    private void scheduleTestNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            android.app.AlarmManager alarmManager =
+                (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
+
+            if (!alarmManager.canScheduleExactAlarms()) return;
+        }
+
+        android.app.AlarmManager alarmManager =
+            (android.app.AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Intent testIntent = new Intent(this, AlarmReceiver.class);
+
+        PendingIntent testPendingIntent = PendingIntent.getBroadcast(
+            this,
+            2001,
+            testIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        alarmManager.setExactAndAllowWhileIdle(
+            android.app.AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis() + 60_000,
+            testPendingIntent
+        );
     }
 
     private class AlarmBridge {
