@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="18dp"
+    android:background="@drawable/birthday_notification_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✦  A SPECIAL DAY  ✦"
+        android:textColor="#F6B8E8"
+        android:textSize="10sp"
+        android:letterSpacing="0.18"
+        android:fontFamily="sans"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/birthday_notification_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Happy Birthday! 🎂"
+        android:textColor="#FFFFFF"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:fontFamily="sans"/>
+
+    <TextView
+        android:id="@+id/birthday_notification_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Today is your special day. Make it beautiful! ❤️"
+        android:textColor="#F4DDED"
+        android:textSize="13sp"
+        android:fontFamily="sans"/>
+
+</LinearLayout>
